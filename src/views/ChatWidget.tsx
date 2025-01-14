@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import MessagesDisplay from "./MessagesDisplay";
 import ChatInput from "./ChatInput";
 import { ChatMessage } from "@/models/ChatMessage";
+import { useOutsideClick } from "@/hooks/useOutsideClick";
 
 interface IChatWidgetProps {
   messages: ChatMessage[];
@@ -19,9 +20,17 @@ const ChatWidget = ({
   isLoading,
 }: IChatWidgetProps) => {
   const [inputValue, setInputValue] = useState("");
+  const chatRef = useRef<HTMLDivElement | null>(null);
+
+  useOutsideClick(chatRef, () => {
+    if (isOpen) setIsOpen(false);
+  });
 
   return (
-    <div className="bg-muted p-4 pt-6 rounded-md shadow-md w-96 relative">
+    <div
+      ref={chatRef}
+      className="bg-muted p-4 pt-6 rounded-md shadow-md w-96 relative"
+    >
       <MessagesDisplay
         isOpen={isOpen}
         setIsOpen={setIsOpen}

@@ -16,7 +16,7 @@ const ChatInput = ({
     e.preventDefault();
     if (!inputValue.trim()) return;
     onSendMessage(inputValue);
-    handleInputValue(""); // Clear input field
+    handleInputValue("");
   };
 
   return (

@@ -15,15 +15,14 @@ const ChatTab = () => {
       >
         {isOpen ? "Fermer" : "Ouvrir le chat"}
       </Button>
-      {isOpen && (
-        <ChatWidget
-          messages={messages}
-          onSendMessage={sendMessage}
-          isOpen={isOpen}
-          setIsOpen={setIsOpen}
-          isLoading={isLoading}
-        />
-      )}
+
+      <ChatWidget
+        messages={messages}
+        onSendMessage={sendMessage}
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        isLoading={isLoading}
+      />
     </div>
   );
 };

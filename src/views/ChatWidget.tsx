@@ -29,7 +29,11 @@ const ChatWidget = ({
   return (
     <div
       ref={chatRef}
-      className="bg-muted p-4 pt-6 rounded-md shadow-md w-96 relative"
+      className={`fixed bottom-0 right-4 bg-muted p-4 pt-6 rounded-t-lg shadow-md w-96 transition-transform duration-300 ease-in-out ${
+        isOpen
+          ? "translate-y-0 pointer-events-auto"
+          : "translate-y-full pointer-events-none"
+      }`}
     >
       <MessagesDisplay
         isOpen={isOpen}

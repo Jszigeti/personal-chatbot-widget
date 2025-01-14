@@ -21,7 +21,7 @@ const ChatWidget = ({
   const [inputValue, setInputValue] = useState("");
 
   return (
-    <div className="bg-muted p-4 rounded-md shadow-md w-96 relative">
+    <div className="bg-muted p-4 pt-6 rounded-md shadow-md w-96 relative">
       <MessagesDisplay
         isOpen={isOpen}
         setIsOpen={setIsOpen}

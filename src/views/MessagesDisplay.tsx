@@ -23,7 +23,7 @@ const MessagesDisplay = ({
         <IconX stroke={3} />
         <span className="sr-only">Closing icon</span>
       </span>
-      <div className="overflow-y-auto h-72 mb-4">
+      <div className="overflow-y-auto h-72 mb-6">
         {messages.map((msg) => (
           <div
             key={msg.id}

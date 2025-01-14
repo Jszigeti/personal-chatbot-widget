@@ -1,3 +1,4 @@
+import React, { useEffect, useRef } from "react";
 import { ChatMessage } from "@/models/ChatMessage";
 import { IconX } from "@tabler/icons-react";
 
@@ -14,6 +15,14 @@ const MessagesDisplay = ({
   messages,
   isLoading,
 }: IMessageDisplayProps) => {
+  const messagesEndRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [messages]);
+
   return (
     <>
       <span
@@ -23,20 +32,23 @@ const MessagesDisplay = ({
         <IconX stroke={3} />
         <span className="sr-only">Closing icon</span>
       </span>
-      <div className="overflow-y-auto h-72 mb-6">
+      <div className="overflow-y-auto h-72 mb-6 mt-6 custom-scrollbar">
         {messages.map((msg) => (
           <div
             key={msg.id}
-            className={`message ${msg.sender} p-2 my-1 ${
+            className={`border rounded-xl text-white w-fit max-w-64 p-2 my-1 ${
               msg.sender === "user"
-                ? "text-right text-blue-600"
-                : "text-left text-green-600"
+                ? "bg-blue-500 place-self-end"
+                : "bg-green-500 place-self-start"
             }`}
           >
             <p>{msg.content}</p>
           </div>
         ))}
-        {isLoading && <p className="text-muted-foreground">...</p>}
+        {isLoading && (
+          <p className="text-muted-foreground place-self-start">...</p>
+        )}
+        <div ref={messagesEndRef}></div>
       </div>
     </>
   );

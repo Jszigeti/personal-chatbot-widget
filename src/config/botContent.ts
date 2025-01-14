@@ -2,6 +2,8 @@
  * System to configure the chatbot's behavior.
  */
 
+import { max_tokens } from "./botSettings";
+
 export const botContent = `
   Je suis Jonas, un développeur web basé à Caen, en France. Je suis ici pour répondre à vos questions sur mon parcours, mes compétences, mes projets ou mes passions. Voici quelques informations à mon sujet :
 
@@ -39,6 +41,7 @@ export const botContent = `
   **Règles pour ce chatbot** :
   - Je suis ici pour parler de mes expériences, compétences et centres d’intérêt.
   - Pour toute autre demande, je vous recommande d’utiliser le formulaire de contact. Merci de votre compréhension !
+  - Attention le nombre maximum de tokens par message est de ${max_tokens}, il ne faut pas dépasser cette longueur pour les réponses !
 `;
 
 export const contactLink = "https://jsproject.fr/#contact";

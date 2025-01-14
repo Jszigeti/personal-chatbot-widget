@@ -1,7 +1,15 @@
+import { Button } from "@/components/ui/button";
+import { useChatViewModel } from "@/viewmodels/ChatViewModel";
+import { IconX } from "@tabler/icons-react";
 import { useState } from "react";
-import { useChatViewModel } from "../viewmodels/ChatViewModel";
 
-const ChatWidget = () => {
+const ChatWidget = ({
+  isOpen,
+  setIsOpen,
+}: {
+  isOpen: boolean;
+  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}) => {
   const { messages, sendMessage, isLoading } = useChatViewModel();
   const [inputValue, setInputValue] = useState("");
 
@@ -12,9 +20,16 @@ const ChatWidget = () => {
   };
 
   return (
-    <div className="chat-widget bg-gray-100 p-4 rounded-md shadow-md w-80">
+    <div className="bg-muted p-4 rounded-md shadow-md w-96 relative">
       {/* Messages display */}
-      <div className="chat-messages overflow-y-auto h-60 mb-4">
+      <span
+        className="absolute top-3 right-3 cursor-pointer"
+        onClick={() => setIsOpen(!isOpen)}
+      >
+        <IconX stroke={3} />
+        <span className="sr-only">Closing icon</span>
+      </span>
+      <div className="overflow-y-auto h-72 mb-4">
         {messages.map((msg) => (
           <div
             key={msg.id}
@@ -27,11 +42,11 @@ const ChatWidget = () => {
             <p>{msg.content}</p>
           </div>
         ))}
-        {isLoading && <p className="text-gray-500">...</p>}
+        {isLoading && <p className="text-muted-foreground">...</p>}
       </div>
 
       {/* Input field */}
-      <div className="chat-input flex items-center">
+      <div className="flex items-center gap-2">
         <input
           type="text"
           className="flex-1 border border-gray-300 rounded-md p-2"
@@ -39,12 +54,12 @@ const ChatWidget = () => {
           onChange={(e) => setInputValue(e.target.value)}
           placeholder="Tapez votre message"
         />
-        <button
+        <Button
           onClick={handleSend}
-          className="ml-2 bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700"
+          className="bg-muted-foreground text-white px-4 py-2 hover:bg-primary"
         >
           Envoyer
-        </button>
+        </Button>
       </div>
     </div>
   );

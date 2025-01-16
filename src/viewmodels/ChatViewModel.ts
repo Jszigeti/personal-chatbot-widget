@@ -3,27 +3,21 @@ import { useState } from "react";
 import { ChatMessage } from "../models/ChatMessage";
 import { getBotResponse } from "../models/OpenAIService";
 import { v4 as uuid } from "uuid";
-import {
-  errorMessageContent,
-  messagesLimitReachContent,
-} from "@/config/botContent";
-import { sessionLimits } from "@/config/botSettings";
+import { useChatStore } from "@/store/chatStore";
 
 export function useChatViewModel() {
-  // State to hold the conversation messages
+  const { config } = useChatStore.getState();
+  const { errorMessageContent, messagesLimitReachContent, maxMessages } =
+    config;
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [messageCount, setMessageCount] = useState(0);
 
-  /**
-   * Function to handle sending a user message and fetching the bot's response.
-   * @param content The user's message content.
-   */
   const sendMessage = async (content: string) => {
     if (!content.trim()) return;
 
     // Limit maximum messages per session
-    if (messageCount >= sessionLimits.maxMessages) {
+    if (messageCount >= maxMessages) {
       setMessages((prev) => [
         ...prev,
         {

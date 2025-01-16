@@ -1,20 +1,10 @@
-import React, { useEffect, useRef } from "react";
-import { ChatMessage } from "@/models/ChatMessage";
+import { useEffect, useRef } from "react";
 import { IconX } from "@tabler/icons-react";
+import { useChatStore } from "@/store/chatStore";
+import { IMessageDisplayProps } from "@/types/gobal";
 
-interface IMessageDisplayProps {
-  isOpen: boolean;
-  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  messages: ChatMessage[];
-  isLoading: boolean;
-}
-
-const MessagesDisplay = ({
-  isOpen,
-  setIsOpen,
-  messages,
-  isLoading,
-}: IMessageDisplayProps) => {
+const MessagesDisplay = ({ messages, isLoading }: IMessageDisplayProps) => {
+  const toggleOpen = useChatStore((state) => state.toggleOpen);
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -27,7 +17,7 @@ const MessagesDisplay = ({
     <>
       <span
         className="absolute top-3 right-3 cursor-pointer"
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={() => toggleOpen()}
       >
         <IconX stroke={3} />
         <span className="sr-only">Closing icon</span>
@@ -36,7 +26,7 @@ const MessagesDisplay = ({
         {messages.map((msg) => (
           <div
             key={msg.id}
-            className={`border rounded-xl text-white w-fit max-w-64 p-2 my-1 ${
+            className={`border rounded-xl text-background w-fit max-w-64 p-2 my-1 ${
               msg.sender === "user"
                 ? "bg-blue-500 place-self-end"
                 : "bg-green-500 place-self-start"
@@ -45,9 +35,7 @@ const MessagesDisplay = ({
             <p>{msg.content}</p>
           </div>
         ))}
-        {isLoading && (
-          <p className="text-muted-foreground place-self-start">...</p>
-        )}
+        {isLoading && <p className="text-background place-self-start">...</p>}
         <div ref={messagesEndRef}></div>
       </div>
     </>

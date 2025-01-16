@@ -1,22 +1,17 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useChatStore } from "@/store/chatStore";
+import { IChatInputProps } from "@/types/gobal";
 
-interface IChatInputProps {
-  onSendMessage: (content: string) => Promise<void>;
-  inputValue: string;
-  handleInputValue: React.Dispatch<React.SetStateAction<string>>;
-}
+const ChatInput = ({ sendMessage }: IChatInputProps) => {
+  const inputValue = useChatStore((state) => state.inputValue);
+  const setInputValue = useChatStore((state) => state.setInputValue);
 
-const ChatInput = ({
-  onSendMessage,
-  inputValue,
-  handleInputValue,
-}: IChatInputProps) => {
   const handleSend = (e: React.FormEvent) => {
     e.preventDefault();
     if (!inputValue.trim()) return;
-    onSendMessage(inputValue);
-    handleInputValue("");
+    sendMessage(inputValue);
+    setInputValue("");
   };
 
   return (
@@ -27,15 +22,15 @@ const ChatInput = ({
       <Input
         type="text"
         value={inputValue}
-        onChange={(e) => handleInputValue(e.target.value)}
-        placeholder="Tapez votre message"
-        className="bg-white"
+        onChange={(e) => setInputValue(e.target.value)}
+        placeholder="Type your message..."
+        className="bg-background"
       />
       <Button
         type="submit"
-        className="bg-muted-foreground text-white px-4 py-2 hover:bg-primary"
+        className="bg-muted-foreground text-background px-4 py-2 hover:bg-primary"
       >
-        Envoyer
+        Send
       </Button>
     </form>
   );

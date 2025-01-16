@@ -1,18 +1,15 @@
-import { botContent } from "@/config/botContent";
-import { max_tokens, model, temperature } from "@/config/botSettings";
+import { useChatStore } from "@/store/chatStore";
 import OpenAI from "openai";
 
-const openai = new OpenAI({
-  apiKey: import.meta.env.VITE_OPENAI_API_KEY, // Your OpenAI API key
-  dangerouslyAllowBrowser: true,
-});
-
-/**
- * Fetch a response from the OpenAI chatbot.
- * @param prompt User's message or prompt.
- * @returns The chatbot's response.
- */
 export async function getBotResponse(prompt: string): Promise<string> {
+  const { config } = useChatStore.getState();
+  const { apiKey, botContent, model, max_tokens, temperature } = config;
+
+  const openai = new OpenAI({
+    apiKey: apiKey,
+    dangerouslyAllowBrowser: true,
+  });
+
   try {
     const response = await openai.chat.completions.create({
       model,

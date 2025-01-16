@@ -1,29 +1,18 @@
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import MessagesDisplay from "./MessagesDisplay";
 import ChatInput from "./ChatInput";
-import { ChatMessage } from "@/models/ChatMessage";
 import { useOutsideClick } from "@/hooks/useOutsideClick";
+import { useChatStore } from "@/store/chatStore";
+import { useChatViewModel } from "@/viewmodels/ChatViewModel";
 
-interface IChatWidgetProps {
-  messages: ChatMessage[];
-  onSendMessage: (content: string) => Promise<void>;
-  isOpen: boolean;
-  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  isLoading: boolean;
-}
-
-const ChatWidget = ({
-  messages,
-  onSendMessage,
-  isOpen,
-  setIsOpen,
-  isLoading,
-}: IChatWidgetProps) => {
-  const [inputValue, setInputValue] = useState("");
+const ChatWidget = () => {
+  const isOpen = useChatStore((state) => state.isOpen);
+  const toggleOpen = useChatStore((state) => state.toggleOpen);
+  const { messages, sendMessage, isLoading } = useChatViewModel();
   const chatRef = useRef<HTMLDivElement | null>(null);
 
   useOutsideClick(chatRef, () => {
-    if (isOpen) setIsOpen(false);
+    if (isOpen) toggleOpen();
   });
 
   return (
@@ -35,17 +24,8 @@ const ChatWidget = ({
           : "translate-y-full pointer-events-none"
       }`}
     >
-      <MessagesDisplay
-        isOpen={isOpen}
-        setIsOpen={setIsOpen}
-        messages={messages}
-        isLoading={isLoading}
-      />
-      <ChatInput
-        onSendMessage={onSendMessage}
-        inputValue={inputValue}
-        handleInputValue={setInputValue}
-      />
+      <MessagesDisplay messages={messages} isLoading={isLoading} />
+      <ChatInput sendMessage={sendMessage} />
     </div>
   );
 };

@@ -39,8 +39,7 @@
     "typescript-eslint": "^8.18.2",
     "vite": "^6.0.5"
   },
-  "description": "Personal chatbot widget for portfolio",
-  "main": "main.tsx",
+  "description": "Fully customizable chatbot widget designed to be integrated into any website",
   "keywords": [
     "gpt",
     "ai",
@@ -48,7 +47,6 @@
     "personal",
     "asssistant",
     "widget",
-    "portfolio",
     "react",
     "vite",
     "typescript",
@@ -57,13 +55,14 @@
     "css"
   ],
   "author": "Jonas Szigeti",
-  "license": "MIT",
+  "license": "UNLICENCED",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Jszig/personal-chatbot-widget.git"
+    "url": "git+https://github.com/Jszigeti/personal-chatbot-widget.git"
   },
   "bugs": {
-    "url": "https://github.com/Jszig/personal-chatbot-widget/issues"
+    "url": "https://github.com/Jszigeti/personal-chatbot-widget/issues"
   },
-  "homepage": "https://github.com/Jszig/personal-chatbot-widget#readme"
+  "homepage": "https://github.com/Jszigeti/personal-chatbot-widget#readme",
+  "main": "eslint.config.js"
 }

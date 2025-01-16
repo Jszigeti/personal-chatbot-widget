@@ -3,6 +3,7 @@ import ChatWidget from "./ChatWidget";
 import { useChatStore } from "@/store/chatStore";
 import { useEffect } from "react";
 import { IChatBotConfig } from "@/types/gobal";
+import { useChatViewModel } from "@/viewmodels/ChatViewModel";
 
 const defaultConfig = {
   model: "gpt-3.5-turbo",
@@ -15,6 +16,7 @@ const ChatTab = ({ config }: IChatBotConfig) => {
   const setConfig = useChatStore((state) => state.setConfig);
   const isOpen = useChatStore((state) => state.isOpen);
   const toggleOpen = useChatStore((state) => state.toggleOpen);
+  const { messages, sendMessage, isLoading } = useChatViewModel();
 
   useEffect(() => {
     const finalConfig = { ...defaultConfig, ...config };
@@ -33,7 +35,11 @@ const ChatTab = ({ config }: IChatBotConfig) => {
         {isOpen ? "Fermer" : "Ouvrir le chat"}
       </Button>
 
-      {isOpen && <ChatWidget />}
+      <ChatWidget
+        messages={messages}
+        sendMessage={sendMessage}
+        isLoading={isLoading}
+      />
     </div>
   );
 };

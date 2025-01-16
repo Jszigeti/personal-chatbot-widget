@@ -3,12 +3,19 @@ import MessagesDisplay from "./MessagesDisplay";
 import ChatInput from "./ChatInput";
 import { useOutsideClick } from "@/hooks/useOutsideClick";
 import { useChatStore } from "@/store/chatStore";
-import { useChatViewModel } from "@/viewmodels/ChatViewModel";
+import { ChatMessage } from "@/models/ChatMessage";
 
-const ChatWidget = () => {
+const ChatWidget = ({
+  messages,
+  sendMessage,
+  isLoading,
+}: {
+  messages: ChatMessage[];
+  sendMessage: (content: string) => Promise<void>;
+  isLoading: boolean;
+}) => {
   const isOpen = useChatStore((state) => state.isOpen);
   const toggleOpen = useChatStore((state) => state.toggleOpen);
-  const { messages, sendMessage, isLoading } = useChatViewModel();
   const chatRef = useRef<HTMLDivElement | null>(null);
 
   useOutsideClick(chatRef, () => {
